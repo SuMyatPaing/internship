@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: auto;
+            margin-top: 100px;
+            /*  change inline into block */
+            display: block;
+            /* display: grid; 
+          grid-template-columns: repeat(4,1fr);  
+          (<div><button></button></div>)
+          */
+            width: 250px;
+            height: 350px;
+            padding: 10px;
+            max-width: 320px;
+            box-shadow: 0 2px 5px;
+        }
+
+
+        button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 4px 6px;
+            background: rgb(223, 223, 223);
+            color: rgb(208, 56, 56);
+            border: none;
+            font-size: 20px;
+        }
+
+        #result {
+            width: 100%;
+            height: 20px;
+            padding: 15px 0px;
+            text-align: right;
+            border: none;
+            border-radius: 10px;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .btn1 {
+            color: orangered;
+            background-color: rgb(167, 167, 228);
+        }
+        .btn2 {
+            color: skyblue;
+            background-color: rgb(167, 167, 228);
+        }
+        .btn3 {
+            color: white;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div><input type="text" id="result" name="result" value="0"></div>
+        <button class="btn1" onclick="clearFun()">C</button>
+        <button onclick="deleteFun()" class="btn1"><i class="fa-solid fa-delete-left"></i></button>
+        <button onclick="getData('%')" class="btn2">%</button>
+        <button onclick="getData('/')" class="btn1">/</button>
+        <button onclick="getData(7)" class="btn2">7</button>
+        <button onclick="getData(8)" class="btn2">8</button>
+        <button onclick="getData(9)" class="btn2">9</button>
+        <button onclick="getData('*')" class="btn1">*</button>
+        <button onclick="getData(4)" class="btn2">4</button>
+        <button onclick="getData(5)" class="btn2">5</button>
+        <button onclick="getData(6)" class="btn2">6</button>
+        <button onclick="getData('-')" class="btn1">-</button>
+        <button onclick="getData(1)" class="btn2">1</button>
+        <button onclick="getData(2)" class="btn2">2</button>
+        <button onclick="getData(3)" class="btn2">3</button>
+        <button onclick="getData('+')" class="btn1">+</button>
+        <button onclick="getData('(')" class="btn2">(</button>
+        <button onclick="getData(')')" class="btn2">)</button>
+        <button onclick="getData(0)" class="btn2">0</button>
+        <button onclick="getData('.')" class="btn2">.</button>
+        <button onclick="calculate('=')" class="btn3">=</button>
+
+    </div>
+    <script>
+        let result = document.getElementById("result");
+
+        function getData(data) {
+            if (result.value === '0') {
+                result.value = data;
+            } else {
+                result.value += data;
+            }
+        }
+
+        function calculate(data) {
+            result.value = eval(result.value);
+        }
+        function clearFun() {
+            result.value = "0";
+        }
+        function deleteFun(data) {
+              result.value = result.value.slice(0, -1) || "0";
+          }
+    </script>
+</body>
+
+</html>
