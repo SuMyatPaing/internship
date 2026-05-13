@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="flex gap-8 p-4 mx-auto mt-20 border-2 border-gray-500 bg-lime-100 rounded-lg shadow-md w-1/2">
+        <section class="p-4 rounded-lg flex flex-col gap-2 w-1/2">
+            <h1 class="font-bold">Update Variables</h1>
+            <label for="name" class="text-md">Name(string):</label>
+            <input type="text" placeholder="" class="border-2 border-gray-300 rounded-md p-1 shadow-md" id="name" value="Alex Walker" oninput="resultValue()">
+            <label for="age" class="text-md">Age(Number):</label>
+            <!-- <input type="number" id="age" placeholder="Enter age" id="age" class="border-2 border-gray-300 rounded-md p-1"> -->
+            <input type="number" oninput="resultValue()" id="age" value="16" class="border-2 border-gray-300 rounded-md p-1">
+            <label for="vipStatus">VIP Status(Boolean):</label>
+            <input type="checkbox" id="vipStatus" onchange="resultValue()"   class="border-2 border-gray-300 rounded-md p-1">
+            <label for="cardColor">Card Color:</label>
+            <input type="color" oninput="resultValue()" id="cardColor" value="#ffffff" class="border-2 border-gray-300 rounded-md">
+        </section>
+        <section class="p-4 w-1/2">
+            <h2 class="font-bold">Live DOM Output</h2>
+            <div class="border-2 border-gray-300 rounded-md shadow-md p-4 w-60 h-40 mt-5 " id="colorValue">
+                <p id="vipOutput" class="bg-amber-500 rounded-md w-40 px-3 "></p>
+                <h3 id="nameOutput"></h3>
+                <!-- <p id="ageOutput">Age output</p> -->
+                <p id="ageOutput"></p>
+            </div>
+        </section>
+    </div>
+    <script>
+        function resultValue() {
+
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let vipStatus = document.getElementById("vipStatus");
+            let cardColor = document.getElementById("cardColor").value;
+            let vipOutput = document.getElementById("vipOutput");
+            let nameOutput = document.getElementById("nameOutput");
+            let ageOutput = document.getElementById("ageOutput");
+            let colorValue = document.getElementById("colorValue");
+            nameOutput.innerHTML = name;
+            ageOutput.innerHTML = "Age:" + age;
+            colorValue.style.backgroundColor = cardColor;
+            if (vipStatus.checked) {
+                vipOutput.textContent ="VIP Member";
+            } else {
+                vipOutput.innerHTML = "";
+            }
+        }
+
+    </script>
+    </div>
+</body>
+
+</html>

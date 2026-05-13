@@ -107,7 +107,7 @@
                 result.value += "*(";
                 return;
             }
-            // If the last char is an operator AND the new char is an operator, STOP.
+ 
             if (operators.includes(lastChar) && operators.includes(data)) {
                 return;
             }
@@ -151,7 +151,7 @@
                 }
             } catch (error) {
                 // This catches cases like (5+) or other syntax issues
-                result.value = "Syntax Error";
+                result.value = "Error! ";
             }
         }//end of calculate function
 
