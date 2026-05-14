@@ -94,157 +94,125 @@
         <button onclick="getData('(')" class="btn2">(</button>
         <button onclick="getData(')')" class="btn2">)</button>
         <button onclick="getData(0)" class="btn2">0</button>
-        <button onclick="addDot('.')" class="btn2">.</button>
+        <button onclick="dotFun('.')" class="btn2">.</button>
         <button onclick="calculate('=')" class="btn3">=</button>
+        </div>
 
-    </div>
-    <script>
+
+        <script>
         let result = document.getElementById("result");
-        let isResult = false;
-        function getData(data) {
 
+        function getData(value) {
+            
             let start = result.selectionStart;
             let end = result.selectionEnd;
             let before = result.value.substring(0, start);
             let after = result.value.substring(end);
+            
+            let lastChar = before.slice(-1);
+            let operators = ['+', '-', '*', '/', '.', '%'];
 
-
-            let lastChar = result.value.slice(-1); // Get the last character typed
-           
-            let operators = ["+", "-", "*", "/", "%"];
-           
-
-            if (data === '(' && !isNaN(lastChar) && before !== '' && lastChar !== '(' && result.value !== "0") {
+            
+            if(value ==='(' && !isNaN(lastChar) && before !== '' && lastChar !== '('){
                 result.value = before + '*(' + after;
                 result.setSelectionRange(start + 2, start + 2);
                 result.focus();
                 return;
             }
 
-
-            //added bracket  code
-            let nextChar = after.charAt(0);
-
-// ) နောက်မှာ number ရိုက်ရင် * ထည့်
-if (!isNaN(data) && lastChar === ')') {
-
-    result.value = before + '*' + data + after;
-
-    result.setSelectionRange(start + 2, start + 2);
-    result.focus();
-
-    return;
-}
-
-// )( ရိုက်ရင် * ထည့်
-if (data === '(' && lastChar === ')') {
-
-    result.value = before + '*(' + after;
-
-    result.setSelectionRange(start + 2, start + 2);
-    result.focus();
-
-    return;
-}
-
-            if (operators.includes(lastChar) && operators.includes(data)) {
-                result.value = before.slice(0, -1) + data + after;
+            
+            if (operators.includes(lastChar) && operators.includes(value)) {
+                result.value = before.slice(0, -1) + value + after;
                 result.setSelectionRange(start, start);
                 result.focus();
                 return;
             }
-
-            if (result.value === '0' && !operators.includes(data.toString())) {
-                result.value = data;
+                        
+            
+            if (result.value === '0' && !operators.includes(value.toString())) {
+                result.value = value;
                 result.setSelectionRange(1, 1);
             } else {
-                result.value = before + data + after;
+                result.value = before + value + after;
                 result.setSelectionRange(start + 1, start + 1);
             }
             result.focus();
-        }//end of get function
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
+           
         function calculate() {
+//    let open = (result.value.match(/\(/g) || []).length;
+//                 let close = (result.value.match(/\)/g) || []).length;
+//                 while (open > close) {
+//                     result.value += ")";
+//                     close++;
+//                }
 
-            // 1. Automatically close missing brackets
-            let open = (result.value.match(/\(/g) || []).length;
-            let close = (result.value.match(/\)/g) || []).length;
-            while (open > close) {
-                result.value += ")";
-                close++;
-            }
-            // 2. Handle empty or invalid bracket content
-            if (result.value.includes("()")) {
-                result.value = "Error";
-                return;
-            }
+//                 if (result.value.includes("()")) {
+//                     result.value = "Error";
+//                     return;
+//                }
+
+                
 
             try {
+                
 
-                // 4. Perform calculation
-                // let finalResult = eval(result.value);
-                let expression = result.value.replace(/%/g, '/100');
+let open = (result.value.match(/\(/g) || []).length;
+                let close = (result.value.match(/\)/g) || []).length;
+                while (open > close) {
+                    result.value += ")";
+                    close++;
+               }
 
-                let finalResult = eval(expression);
+                if (result.value.includes("()")) {
+                    result.value = "Error";
+                    return;
+               }
 
-                // 3. Check for division by zero
+
                 if (result.value.includes('/0') && !result.value.includes('/0.')) {
                     result.value = "Cannot divide by 0";
                     return;
                 }
+
+                let finalResult = eval(result.value);
+                result.value = Number.isInteger(finalResult) ? finalResult : parseFloat(finalResult.toFixed(6));
                 
-                if (Number.isInteger(finalResult)) {
-                    result.value = finalResult;
-                } else {
-                    result.value = parseFloat(finalResult.toFixed(6));
-                }
-
             } catch (error) {
-                // This catches cases like (5+) or other syntax issues
-                result.value = "Error! ";
-            }
-
-
-        }//end of calculate function
-
-        // isResult = true;
-        function addDot() {
-            let lastnum = result.value.split(/[\+\-\*\/]/).pop();
-            if (!lastnum.includes(".")) {
-                result.value += ".";
-
+                result.value = "Error!";
             }
             result.focus();
-        }//end calc function
 
+
+
+
+            // let expression = result.value;
+
+            //     if (expression.includes("%")) {
+
+            //         expression = expression.replace("%", "/100");
+
+            //     }
+
+            //     result.value = eval(expression);
+
+        }
+        
         function clearFun() {
             result.value = "0";
             result.focus();
         }
-        function deleteFun(data) {
-            // result.value = result.value.slice(0, -1) || "0";
+
+        function deleteFun() {
             let start = result.selectionStart;
             let end = result.selectionEnd;
 
             if (start !== end) {
-
+                
                 result.value = result.value.substring(0, start) + result.value.substring(end);
                 result.setSelectionRange(start, start);
             } else if (start > 0) {
-
+                
                 result.value = result.value.substring(0, start - 1) + result.value.substring(end);
                 result.setSelectionRange(start - 1, start - 1);
             }
@@ -252,7 +220,27 @@ if (data === '(' && lastChar === ')') {
             if (result.value === "") result.value = "0";
             result.focus();
         }
+
+        function dotFun() {
+                let lastnum = result.value.split(/[\+\-\*\/]/).pop();
+                if (!lastnum.includes(".")) {
+                    result.value += ".";
+                    
+                }
+            }
+
+            //  function calculatePercent(){
+            //     let expression = result.value;
+
+            //     if (expression.includes("%")) {
+
+            //         expression = expression.replace("%", "/100");
+
+            //     }
+
+            //     result.value = eval(expression);
+            // }
     </script>
-</body>
+    </body>
 
 </html>
